@@ -4,8 +4,7 @@
   "description": "Web application for planning camera placements on floor plans",
   "main": "index.js",
   "scripts": {
-    "start": "npx serve -l 3000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx serve -l 3000"
   },
   "author": "",
   "license": "ISC",

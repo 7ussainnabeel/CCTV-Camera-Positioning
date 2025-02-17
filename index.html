@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="Assets/cctv.png">
+    <title>CCTV Camera Positioning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <div class="camera-controls">
+                <label>Camera Type:
+                    <select id="cameraType">
+                        <option value="fixed">Fixed (135°)</option>
+                        <option value="ptz">PTZ (360°)</option>
+                    </select>
+                </label>
+                <label>Camera Name: <input type="text" id="cameraName"></label>
+                <label>Radius: <input type="number" id="cameraRadius"></label>
+                <label>Direction: <input type="number" id="cameraDirection"></label>
+                <button id="addCamera">Add Camera</button>
+            </div>
+            <div class="file-controls">
+                <label class="file-upload">
+                    <input type="file" id="pdfUpload" accept="application/pdf" hidden>
+                    Upload PDF
+                </label>
+            </div>
+            <div class="page-navigation">
+                <button id="prevPage" disabled>&larr; Previous</button>
+                <span id="pageInfo">Page 1 of 1</span>
+                <button id="nextPage" disabled>Next &rarr;</button>
+            </div>
+            
+            <div class="export-controls">
+                <button id="exportPdf">Export PDF</button>
+                <button id="exportPng">Export PNG</button>
+                <button id="clearCanvas">Clear Canvas</button>
+                <button id="undoCamera">Undo Last Camera</button>
+            </div>
+        </div>
+        <canvas id="mainCanvas"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

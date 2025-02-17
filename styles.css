@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    height: 100vh;
+    gap: 30px;
+    padding: 20px;
+}
+
+.controls {
+    width: 300px;
+    padding: 25px;
+    background-color: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.camera-controls {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.camera-controls label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.camera-controls input,
+.camera-controls select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+#mainCanvas {
+    flex: 1;
+    background-color: white;
+}
+
+button, .button, .file-upload, #addCamera {
+    display: inline-block;
+    min-width: 120px;
+    padding: 12px 24px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+button:hover, .button:hover, .file-upload:hover, #addCamera:hover {
+    background-color: #1e40af;
+    transform: translateY(-1px);
+}
+
+button:disabled, .button:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+}
+
+.file-upload, #addCamera {
+    width: 100%;
+}
+
+.page-navigation button {
+    min-width: 100px;
+    margin: 0 5px;
+}
+
+.export-controls button {
+    width: auto;
+    flex: 1;
+}
+
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px 0;
+}
+
+/* Navigation buttons styled in main button rules */
+
+.page-navigation button:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+}
+
+.page-navigation button:hover:not(:disabled) {
+    background-color: #1e40af;
+}
+
+#pageInfo {
+    font-weight: 500;
+    margin: 0 15px;
+    padding: 8px 0;
+}
+
+.export-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+/* Export controls styled in main button rules */

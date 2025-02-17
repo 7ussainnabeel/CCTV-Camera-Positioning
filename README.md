@@ -18,6 +18,8 @@ A web-based application for planning and visualizing camera placements on floor 
 
 ## Installation
 1. Clone the repository
+    ```bash
+    git clone https://github.com/7ussainnabeel/CCTV-Camera-Positioning.git
 2. Install dependencies:
    ```bash
    npm install

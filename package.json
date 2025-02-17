@@ -1,5 +1,5 @@
 {
-  "name": "cameras-positioning",
+  "name": "cctv-camera-positioning",
   "version": "1.0.0",
   "description": "Web application for planning camera placements on floor plans",
   "main": "index.js",

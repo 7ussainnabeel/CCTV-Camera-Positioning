@@ -10,8 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1",
-    "pdfjs-dist": "^3.11.174",
+    "jspdf": "^3.0.2",
+    "pdfjs-dist": "^5.4.54",
     "serve": "^14.2.0"
   }
 }

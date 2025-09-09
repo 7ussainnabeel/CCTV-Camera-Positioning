@@ -11,6 +11,7 @@
   "dependencies": {
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.2",
+    "on-headers": "^1.1.0",
     "pdfjs-dist": "^5.4.54",
     "serve": "^14.2.0"
   }

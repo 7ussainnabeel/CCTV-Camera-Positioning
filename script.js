@@ -1,3 +1,10 @@
+import * as pdfjsLib from 'pdfjs-dist';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+
+// Set the worker source for PDF.js
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d');
 const cameraType = document.getElementById('cameraType');
@@ -134,7 +141,6 @@ function addCamera(event) {
 
 // Export to PDF
 async function exportToPdf() {
-    const { jsPDF } = window.jspdf;
     
     // Get current page to determine orientation
     const page = await currentPdf.getPage(currentPage);

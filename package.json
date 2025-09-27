@@ -4,15 +4,21 @@
   "description": "Web application for planning camera placements on floor plans",
   "main": "index.js",
   "scripts": {
-    "start": "npx serve -l 3000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "html2canvas": "^1.4.1",
-    "jspdf": "^3.0.2",
+    "jspdf": "^3.0.3",
     "on-headers": "^1.1.0",
-    "pdfjs-dist": "^5.4.54",
+    "pdfjs-dist": "^5.4.149",
     "serve": "^14.2.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7"
   }
 }

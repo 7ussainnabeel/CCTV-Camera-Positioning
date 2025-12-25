@@ -374,7 +374,7 @@ body {
     border-radius: var(--radius-md);
     color: #a78bfa;
     font-weight: 500;
-    margin-top: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .camera-count i {

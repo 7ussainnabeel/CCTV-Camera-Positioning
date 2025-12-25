@@ -17,20 +17,58 @@ const exportPngBtn = document.getElementById('exportPng');
 const clearCanvasBtn = document.getElementById('clearCanvas');
 const undoCameraBtn = document.getElementById('undoCamera');
 const pdfUpload = document.getElementById('pdfUpload');
+const cameraCountDisplay = document.getElementById('cameraCount');
+const zoomInBtn = document.getElementById('zoomIn');
+const zoomOutBtn = document.getElementById('zoomOut');
+const zoomLevelDisplay = document.getElementById('zoomLevel');
 
 let cameras = [];
 let currentPdf = null;
 let currentPage = 1;
 let totalPages = 1;
 let scale = 1;
+let zoomLevel = 1;
 const prevPageBtn = document.getElementById('prevPage');
 const nextPageBtn = document.getElementById('nextPage');
 const pageInfo = document.getElementById('pageInfo');
 
+// Update camera count display
+function updateCameraCount() {
+    const count = cameras.length;
+    cameraCountDisplay.textContent = `${count} camera${count !== 1 ? 's' : ''} placed`;
+}
+
 // Initialize canvas size
 function initCanvas() {
-    canvas.width = window.innerWidth - 340;
-    canvas.height = window.innerHeight - 40;
+    const wrapper = document.querySelector('.canvas-wrapper');
+    const toolbar = document.querySelector('.canvas-toolbar');
+    if (wrapper && toolbar) {
+        canvas.width = wrapper.clientWidth - 40;
+        canvas.height = wrapper.clientHeight - toolbar.clientHeight - 40;
+    }
+}
+
+// Zoom functions
+function zoomIn() {
+    if (zoomLevel < 2) {
+        zoomLevel += 0.1;
+        scale = zoomLevel;
+        zoomLevelDisplay.textContent = `${Math.round(zoomLevel * 100)}%`;
+        if (currentPdf) {
+            renderPage(currentPage);
+        }
+    }
+}
+
+function zoomOut() {
+    if (zoomLevel > 0.5) {
+        zoomLevel -= 0.1;
+        scale = zoomLevel;
+        zoomLevelDisplay.textContent = `${Math.round(zoomLevel * 100)}%`;
+        if (currentPdf) {
+            renderPage(currentPage);
+        }
+    }
 }
 
 // Load PDF document from URL or File
@@ -136,7 +174,12 @@ function addCamera(event) {
     };
     
     cameras.push(camera);
-    renderPage(currentPage);
+    updateCameraCount();
+    if (currentPdf) {
+        renderPage(currentPage);
+    } else {
+        drawCameras();
+    }
 }
 
 // Export to PDF
@@ -200,23 +243,52 @@ function nextPage() {
 
 // Clear canvas
 function clearCanvas() {
+    if (cameras.length === 0 && !currentPdf) {
+        return; // Nothing to clear
+    }
+    
+    if (cameras.length > 0) {
+        const confirmed = confirm(`Are you sure you want to remove all ${cameras.length} cameras?`);
+        if (!confirmed) return;
+    }
+    
     cameras = [];
-    renderPage(currentPage);
+    updateCameraCount();
+    
+    // Clear the canvas completely first
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // If there's a PDF, re-render it (without cameras)
+    if (currentPdf) {
+        renderPage(currentPage);
+    }
 }
 
 // Event Listeners
 window.addEventListener('resize', initCanvas);
 canvas.addEventListener('click', addCamera);
-addCameraBtn.addEventListener('click', addCamera);
+addCameraBtn.addEventListener('click', () => {
+    alert('Click on the floor plan to place the camera.');
+});
 exportPdfBtn.addEventListener('click', exportToPdf);
 exportPngBtn.addEventListener('click', exportToPng);
 clearCanvasBtn.addEventListener('click', clearCanvas);
 undoCameraBtn.addEventListener('click', () => {
     if (cameras.length > 0) {
         cameras.pop();
-        renderPage(currentPage);
+        updateCameraCount();
+        if (currentPdf) {
+            renderPage(currentPage);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCameras();
+        }
     }
 });
+
+// Add zoom control event listeners
+zoomInBtn.addEventListener('click', zoomIn);
+zoomOutBtn.addEventListener('click', zoomOut);
 
 // Handle PDF file upload
 pdfUpload.addEventListener('change', (event) => {
@@ -233,3 +305,5 @@ prevPageBtn.addEventListener('click', prevPage);
 nextPageBtn.addEventListener('click', nextPage);
 
 // Initialize
+initCanvas();
+updateCameraCount();

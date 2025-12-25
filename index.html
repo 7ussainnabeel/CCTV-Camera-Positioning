@@ -6,43 +6,157 @@
     <link rel="icon" type="image/x-icon" href="Assets/cctv.png">
     <title>CCTV Camera Positioning</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="controls">
-            <div class="camera-controls">
-                <label>Camera Type:
-                    <select id="cameraType">
-                        <option value="fixed">Fixed (135°)</option>
-                        <option value="ptz">PTZ (360°)</option>
-                    </select>
-                </label>
-                <label>Camera Name: <input type="text" id="cameraName"></label>
-                <label>Radius: <input type="number" id="cameraRadius"></label>
-                <label>Direction: <input type="number" id="cameraDirection"></label>
-                <button id="addCamera">Add Camera</button>
+    <div class="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <i class="fas fa-video"></i>
+                <h1>CCTV Camera Planner</h1>
             </div>
-            <div class="file-controls">
-                <label class="file-upload">
-                    <input type="file" id="pdfUpload" accept="application/pdf" hidden>
-                    Upload PDF
-                </label>
-            </div>
-            <div class="page-navigation">
-                <button id="prevPage" disabled>&larr; Previous</button>
-                <span id="pageInfo">Page 1 of 1</span>
-                <button id="nextPage" disabled>Next &rarr;</button>
-            </div>
-            
-            <div class="export-controls">
-                <button id="exportPdf">Export PDF</button>
-                <button id="exportPng">Export PNG</button>
-                <button id="clearCanvas">Clear Canvas</button>
-                <button id="undoCamera">Undo Last Camera</button>
+            <div class="header-actions">
+                <button id="exportPdf" class="btn-secondary">
+                    <i class="fas fa-file-pdf"></i>
+                    Export PDF
+                </button>
+                <button id="exportPng" class="btn-secondary">
+                    <i class="fas fa-image"></i>
+                    Export PNG
+                </button>
             </div>
         </div>
-        <canvas id="mainCanvas"></canvas>
     </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="control-section">
+                <div class="section-header">
+                    <i class="fas fa-upload"></i>
+                    <h3>Upload Floor Plan</h3>
+                </div>
+                <label class="file-upload-btn">
+                    <input type="file" id="pdfUpload" accept="application/pdf" hidden>
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Choose PDF File</span>
+                </label>
+            </div>
+
+            <div class="control-section">
+                <div class="section-header">
+                    <i class="fas fa-camera"></i>
+                    <h3>Camera Settings</h3>
+                </div>
+                <div class="form-group">
+                    <label for="cameraType">
+                        <i class="fas fa-sliders-h"></i>
+                        Camera Type
+                    </label>
+                    <select id="cameraType">
+                        <option value="fixed">🎯 Fixed Camera (135°)</option>
+                        <option value="ptz">🔄 PTZ Camera (360°)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cameraName">
+                        <i class="fas fa-tag"></i>
+                        Camera Name
+                    </label>
+                    <input type="text" id="cameraName" placeholder="e.g., Front Entrance">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cameraRadius">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                            Radius (m)
+                        </label>
+                        <input type="number" id="cameraRadius" placeholder="50" min="10" max="500">
+                    </div>
+                    <div class="form-group">
+                        <label for="cameraDirection">
+                            <i class="fas fa-compass"></i>
+                            Direction (°)
+                        </label>
+                        <select id="cameraDirection">
+                            <option value="0">⬆️ 0°</option>
+                            <option value="45">↗️ 45°</option>
+                            <option value="90">➡️ 90°</option>
+                            <option value="135" selected>↘️ 135°</option>
+                            <option value="180">⬇️ 180°</option>
+                            <option value="225">↙️ 225°</option>
+                            <option value="270">⬅️ 270°</option>
+                            <option value="315">↖️ 315°</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="addCamera" class="btn-primary">
+                    <i class="fas fa-plus-circle"></i>
+                    Place Camera on Plan
+                </button>
+            </div>
+
+            <div class="control-section">
+                <div class="section-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Page Navigation</h3>
+                </div>
+                <div class="page-navigation">
+                    <button id="prevPage" class="btn-nav" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                    <button id="nextPage" class="btn-nav" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-header">
+                    <i class="fas fa-tools"></i>
+                    <h3>Actions</h3>
+                </div>
+                <div class="action-buttons">
+                    <button id="undoCamera" class="btn-action btn-warning">
+                        <i class="fas fa-undo"></i>
+                        Undo Last
+                    </button>
+                    <button id="clearCanvas" class="btn-action btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div class="camera-count">
+                <i class="fas fa-info-circle"></i>
+                <span id="cameraCount">0 cameras placed</span>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <div class="canvas-toolbar">
+                <div class="toolbar-info">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <span>Click on the floor plan to place cameras</span>
+                </div>
+                <div class="zoom-controls">
+                    <button id="zoomOut" class="btn-icon" title="Zoom Out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span id="zoomLevel">100%</span>
+                    <button id="zoomIn" class="btn-icon" title="Zoom In">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <canvas id="mainCanvas"></canvas>
+        </div>
+    </div>
+
     <script type="module" src="script.js"></script>
 </body>
 </html>

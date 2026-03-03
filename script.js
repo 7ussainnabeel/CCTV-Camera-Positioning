@@ -1,9 +1,10 @@
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
 // Set the worker source for PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d');

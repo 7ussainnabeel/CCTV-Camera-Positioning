@@ -1,9 +1,31 @@
-import * as pdfjsLib from 'pdfjs-dist';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
-// Set the worker source for PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs`;
+// PDF.js is loaded via CDN script tag in HTML
+let pdfjsLib;
+
+// Wait for PDF.js to be available
+async function getPdfjsLib() {
+    if (pdfjsLib) return pdfjsLib;
+    
+    return new Promise((resolve) => {
+        const checkInterval = setInterval(() => {
+            if (window.pdfjsLib) {
+                pdfjsLib = window.pdfjsLib;
+                pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.js`;
+                clearInterval(checkInterval);
+                resolve(pdfjsLib);
+            }
+        }, 10);
+        
+        // Timeout after 5 seconds
+        setTimeout(() => {
+            clearInterval(checkInterval);
+            console.error('PDF.js library failed to load');
+            resolve(null);
+        }, 5000);
+    });
+}
 
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d');
@@ -73,12 +95,18 @@ function zoomOut() {
 
 // Load PDF document from URL or File
 async function loadPdf(source) {
+    const lib = await getPdfjsLib();
+    if (!lib) {
+        alert('PDF.js library failed to load. Please refresh the page.');
+        return;
+    }
+    
     let loadingTask;
     if (typeof source === 'string') {
-        loadingTask = pdfjsLib.getDocument(source);
+        loadingTask = lib.getDocument(source);
     } else {
         const arrayBuffer = await source.arrayBuffer();
-        loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        loadingTask = lib.getDocument({ data: arrayBuffer });
     }
     
     try {

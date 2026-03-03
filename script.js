@@ -5,7 +5,7 @@ const { jsPDF } = window.jspdf;
 
 // Set the worker source for PDF.js
 if (pdfjsLib) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.149/build/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 }
 
 const canvas = document.getElementById('mainCanvas');
